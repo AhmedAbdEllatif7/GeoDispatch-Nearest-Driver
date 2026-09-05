@@ -1,0 +1,38 @@
+services:
+  geodispatch-app:
+    container_name: geodispatch-dev
+    volumes:
+      - .:/public_html
+      - /public_html/vendor #لها شرح تحت
+    environment:
+      APP_ENV: local
+      APP_DEBUG: true
+    ports:
+      - "5000:8000"
+
+
+
+
+
+
+
+
+
+
+# 2️⃣ /public_html/vendor
+# ده مش bind mount، ده anonymous volume (volume يديره Docker).
+
+# معناه: "اعزل مجلد /public_html/vendor جوه الـ container عن الـ bind mount".
+
+# النتيجة: مجلد vendor اللي جوه الـ container مش هيكون متزامن مع اللي عندك محليًا.
+
+# أي تغيير في vendor عندك مش هيسمع جوه الـ container، والعكس صحيح.
+
+# 🔎 ليه بنعمل كده؟
+# لأنك لما عملت bind mount للمشروع كله (.:/public_html)، ده بيشمل مجلد vendor كمان.
+
+# لكن الـ container بيبني الـ vendor الخاص بيه باستخدام composer install.
+
+# لو خليت الـ vendor متزامن مع جهازك، ممكن يحصل تضارب بين نسخ الـ dependencies (إصدارات مختلفة، OS مختلف).
+
+# عشان كده بنكتب /public_html/vendor كـ volume مستقل → Docker يعزله ويخليه خاص بالـ container.

@@ -1,0 +1,68 @@
+services:
+  geodispatch-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: geodispatch:latest #give image name instead the default
+    env_file:
+      - .env
+
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: geodispatch
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  pgdata:
+
+
+##########################################################################################################################################################
+# شرح     volumes:
+#       - pgdata:/var/lib/postgresql/data
+# الجزء الأول: pgdata  
+# ده اسم volume managed by Docker. يعني مساحة تخزين مستقلة بيعملها Docker ويحافظ عليها حتى لو الكونتينر نفسه اتشال أو اتعمله restart.
+
+# الجزء الثاني: /var/lib/postgresql/data  
+# ده المسار جوه الـ container اللي PostgreSQL بيخزن فيه كل البيانات (الجداول، الـ records، الـ indexes، إلخ).
+
+# ➡️ النتيجة: البيانات بتتخزن في volume اسمه pgdata على جهازك، مش جوه الكونتينر نفسه.
+# عشان لو الكونتينر اتوقف واشتغل هو بيكون في الميموري وبالتالي كدا بيانات الداتابيز هتضيع
+# pgdata = ده اسم Named Volume، وإنت حر تسميه أي اسم (زي dbdata, postgres_storage, إلخ).
+
+# /var/lib/postgresql/data = ده المسار جوه الـ container اللي PostgreSQL بيخزن فيه فعليًا كل قواعد البيانات والجداول.
+
+# ➡️ النتيجة: البيانات بتتخزن في volume خارجي اسمه pgdata، مش جوه الـ container نفسه.
+
+# 🔎 ليه مهم؟
+# الكونتينر بيشتغل كبيئة مؤقتة، لو اتقفل أو اتمسح → أي بيانات جوه المسار الداخلي تضيع.
+
+# لكن لما تعمل Named Volume، Docker يخزن البيانات على جهازك (في /var/lib/docker/volumes/pgdata/_data).
+
+# كده حتى لو الكونتينر اتشال أو اتعمله rebuild، البيانات تفضل موجودة في الـ volume.
+
+# ⚡ إزاي المشروع بيقرأ من المسار ده تلقائيًا؟
+# PostgreSQL نفسه متبرمج إنه يخزن ويقرأ البيانات من /var/lib/postgresql/data.
+
+# لما تربط الـ volume بالمسار ده، PostgreSQL بيشتغل عادي جدًا كأنه بيكتب جوه الكونتينر، لكن فعليًا الكتابة بتروح للـ volume الخارجي.
+
+# Laravel أو أي تطبيق بيتصل بالـ DB مش محتاج يعرف التفاصيل دي، هو بس بيكلم PostgreSQL على الـ host والـ port.
+
+# PostgreSQL من ناحيته بيقرأ ويكتب في المسار اللي مربوط بالـ volume، فالموضوع بيحصل تلقائيًا.
+
+
+##########################################################################################################################################################
