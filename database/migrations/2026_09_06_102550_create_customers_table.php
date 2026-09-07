@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->geography('location', subtype: 'point', srid: 4326);
             $table->timestamps();
+
+            // Spatial GiST Index for geographic lookups
+            $table->spatialIndex('location');
         });
     }
 

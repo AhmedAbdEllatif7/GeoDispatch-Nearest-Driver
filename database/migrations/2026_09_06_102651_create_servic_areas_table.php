@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('servic_areas', function (Blueprint $table) {
+        Schema::create('service_areas', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->geometry('boundary', subtype: 'polygon', srid: 4326);
             $table->timestamps();
+
+            // Spatial GiST Index for polygon containment checks (ST_Contains)
+            $table->spatialIndex('boundary');
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('servic_areas');
+        Schema::dropIfExists('service_areas');
     }
 };
