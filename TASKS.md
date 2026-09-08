@@ -13,8 +13,7 @@
 - [x] Driver model
 - [x] Customer model
 - [x] Spatial columns
-- [x] Spatial migrations
-- [ ] Spatial factories
+- [x] Spatial factories
 - [ ] Seed 100k locations
 
 ## Phase 3 — Spatial Queries
