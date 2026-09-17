@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DriverController;
-use App\Http\Controllers\ServicAreaController;
+use App\Http\Controllers\ServiceAreaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +18,9 @@ Route::get('drivers/nearby', [DriverController::class, 'nearby']);
 Route::get('drivers/nearest', [DriverController::class, 'nearest']);
 
 // UC-03: Check if a point belongs to any Service Area (Containment check)
-Route::get('service-areas/check', [ServicAreaController::class, 'check']);
+Route::get('service-areas/check', [ServiceAreaController::class, 'check']);
 
 // CRUD REST Resources
 Route::apiResource('drivers', DriverController::class);
 Route::apiResource('customers', CustomerController::class);
-Route::apiResource('service-areas', ServicAreaController::class);
+Route::apiResource('service-areas', ServiceAreaController::class);

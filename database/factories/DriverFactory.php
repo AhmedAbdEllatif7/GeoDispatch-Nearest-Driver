@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\DriverStatus;
 use App\Models\Driver;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,7 @@ class DriverFactory extends Factory
 
         return [
             'name' => fake()->name(),
-            'status' => fake()->randomElement(['available', 'available', 'available', 'busy', 'offline']),
+            'status' => fake()->randomElement(DriverStatus::cases()),
             'location' => DB::raw("ST_SetSRID(ST_MakePoint({$longitude}, {$latitude}), 4326)::geography"),
         ];
     }
@@ -32,7 +33,7 @@ class DriverFactory extends Factory
     public function available(): static
     {
         return $this->state(fn (array $attributes) => [
-            'status' => 'available',
+            'status' => DriverStatus::AVAILABLE,
         ]);
     }
 
@@ -42,7 +43,7 @@ class DriverFactory extends Factory
     public function busy(): static
     {
         return $this->state(fn (array $attributes) => [
-            'status' => 'busy',
+            'status' => DriverStatus::BUSY,
         ]);
     }
 
@@ -52,7 +53,7 @@ class DriverFactory extends Factory
     public function offline(): static
     {
         return $this->state(fn (array $attributes) => [
-            'status' => 'offline',
+            'status' => DriverStatus::OFFLINE,
         ]);
     }
 }

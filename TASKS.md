@@ -18,8 +18,8 @@
 
 ## Phase 3 — Spatial Queries
 
-- [ ] Nearby drivers
-- [ ] Radius search
+- [x] Nearby drivers
+- [x] Radius search
 - [ ] Nearest driver
 - [ ] Service area containment
 

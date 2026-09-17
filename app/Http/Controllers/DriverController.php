@@ -2,64 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Drivers\FindNearbyDriversAction;
+use App\Http\Requests\NearbyDriversRequest;
+use App\Http\Resources\DriverResource;
 use App\Models\Driver;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DriverController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * UC-01: Find nearby drivers within a specified radius.
      */
-    public function index()
+    public function nearby(NearbyDriversRequest $request, FindNearbyDriversAction $action): AnonymousResourceCollection
     {
-        //
+        $drivers = $action->execute(
+            latitude: (float) $request->validated('latitude'),
+            longitude: (float) $request->validated('longitude'),
+            radiusInMeters: (float) ($request->validated('radius') ?? 5000.0),
+            status: $request->validated('status', 'available'),
+            limit: (int) ($request->validated('limit') ?? 20)
+        );
+
+        return DriverResource::collection($drivers);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a paginated listing of drivers.
      */
-    public function create()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        $drivers = Driver::query()
+            ->withCoordinates()
+            ->latest()
+            ->paginate(20);
+
+        return DriverResource::collection($drivers);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display the specified driver with coordinates.
      */
-    public function store(Request $request)
+    public function show(Driver $driver): DriverResource
     {
-        //
-    }
+        $driverWithCoords = Driver::query()
+            ->withCoordinates()
+            ->findOrFail($driver->id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Driver $driver)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Driver $driver)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Driver $driver)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Driver $driver)
-    {
-        //
+        return new DriverResource($driverWithCoords);
     }
 }
