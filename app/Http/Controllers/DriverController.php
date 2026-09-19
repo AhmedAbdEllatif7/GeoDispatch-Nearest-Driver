@@ -44,10 +44,12 @@ class DriverController extends Controller
      */
     public function show(Driver $driver): DriverResource
     {
-        $driverWithCoords = Driver::query()
+        $driver = Driver::query()
             ->withCoordinates()
             ->findOrFail($driver->id);
 
-        return new DriverResource($driverWithCoords);
+        return new DriverResource($driver);
     }
+
+
 }

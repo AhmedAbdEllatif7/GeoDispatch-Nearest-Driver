@@ -5,4 +5,4 @@ services:
       APP_ENV: production
       APP_DEBUG: false
     ports:
-      - "80:8000"   # في الإنتاج غالبًا تستخدم port 80
+      - "80:8000"   # في البروداكشن غالبًا تستخدم port 80
