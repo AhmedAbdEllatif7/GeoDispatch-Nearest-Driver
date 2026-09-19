@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Drivers\FindNearbyDriversAction;
+use App\Actions\Drivers\FindNearestDriverAction;
 use App\Http\Requests\NearbyDriversRequest;
+use App\Http\Requests\NearestDriverRequest;
 use App\Http\Resources\DriverResource;
 use App\Models\Driver;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,6 +29,24 @@ class DriverController extends Controller
     }
 
     /**
+     * UC-02: Find nearest available driver (KNN Proximity).
+     */
+    public function nearest(NearestDriverRequest $request, FindNearestDriverAction $action): DriverResource
+    {
+        $driver = $action->execute(
+            latitude: (float) $request->validated('latitude'),
+            longitude: (float) $request->validated('longitude'),
+            status: $request->validated('status', 'available')
+        );
+
+        if (! $driver) {
+            abort(404, 'No available drivers found.');
+        }
+
+        return new DriverResource($driver);
+    }
+
+    /**
      * Display a paginated listing of drivers.
      */
     public function index(): AnonymousResourceCollection
@@ -34,7 +54,7 @@ class DriverController extends Controller
         $drivers = Driver::query()
             ->withCoordinates()
             ->latest()
-            ->paginate(20);
+            ->paginate(2);
 
         return DriverResource::collection($drivers);
     }

@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => 'The requested resource was not found.',
+                    'message' => $e->getMessage() ?: 'The requested resource was not found.',
                 ], 404);
             }
         });
