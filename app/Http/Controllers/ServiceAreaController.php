@@ -40,7 +40,10 @@ class ServiceAreaController extends Controller
 
     public function index()
     {
-        //
+        $serviceAreas = ServiceArea::paginate(2);
+        return response()->json([
+            'service_area' => ServiceAreaResource::collection($serviceAreas),
+        ]);
     }
 
     /**
@@ -48,7 +51,7 @@ class ServiceAreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

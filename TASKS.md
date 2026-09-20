@@ -14,7 +14,7 @@
 - [x] Customer model
 - [x] Spatial columns
 - [x] Spatial factories
-- [ ] Seed 100k locations
+- [x] Seed 100k locations
 
 ## Phase 3 — Spatial Queries
 

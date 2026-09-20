@@ -54,7 +54,7 @@ class DriverController extends Controller
         $drivers = Driver::query()
             ->withCoordinates()
             ->latest()
-            ->paginate(2);
+            ->paginate(20);
 
         return DriverResource::collection($drivers);
     }
