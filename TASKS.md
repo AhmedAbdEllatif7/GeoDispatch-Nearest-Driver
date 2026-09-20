@@ -21,7 +21,7 @@
 - [x] Nearby drivers
 - [x] Radius search
 - [x] Nearest driver
-- [ ] Service area containment
+- [x] Service area containment
 
 ## Phase 4 — Optimization
 

@@ -2,14 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ServiceArea\CheckServiceAreaAction;
+use App\Http\Requests\CheckServiceAreaRequest;
+use App\Http\Resources\ServiceAreaResource;
 use App\Models\ServiceArea;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ServiceAreaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * UC-03: Check if a point belongs to any Service Area (Containment check).
      */
+    public function check(CheckServiceAreaRequest $request, CheckServiceAreaAction $action): JsonResponse
+    {
+        $serviceArea = $action->execute(
+            latitude: (float) $request->validated('latitude'),
+            longitude: (float) $request->validated('longitude')
+        );
+
+        if (! $serviceArea) {
+            return response()->json([
+                'serviceable' => false,
+                'message' => 'No service area found for the given coordinates.',
+            ], 404);
+        }
+
+        return response()->json([
+            'serviceable' => true,
+            'service_area' => new ServiceAreaResource($serviceArea),
+        ]);
+    }
+
+
+
+
+
     public function index()
     {
         //
