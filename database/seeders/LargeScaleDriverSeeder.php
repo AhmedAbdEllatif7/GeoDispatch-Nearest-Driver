@@ -11,6 +11,7 @@ class LargeScaleDriverSeeder extends Seeder
      * Run the database seeds.
      * Generates 100,000 spatial drivers directly inside PostgreSQL engine.
      */
+
     public function run(int $count = 100000): void
     {
         $this->command?->info("Starting high-speed generation of {$count} spatial drivers in PostgreSQL...");
@@ -46,3 +47,4 @@ class LargeScaleDriverSeeder extends Seeder
         $this->command?->info("Successfully seeded {$count} spatial drivers in {$elapsed} seconds!");
     }
 }
+

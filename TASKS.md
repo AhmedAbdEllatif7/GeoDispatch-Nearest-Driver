@@ -25,10 +25,10 @@
 
 ## Phase 4 — Optimization
 
-- [ ] GiST index
-- [ ] Query EXPLAIN
-- [ ] Benchmark without index
-- [ ] Benchmark with index
+- [x] GiST index
+- [x] Query EXPLAIN
+- [x] Benchmark without index
+- [x] Benchmark with index
 
 ## Phase 5 — Testing
 
