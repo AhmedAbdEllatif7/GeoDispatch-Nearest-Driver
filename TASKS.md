@@ -32,10 +32,10 @@
 
 ## Phase 5 — Testing
 
-- [ ] Spatial query tests
-- [ ] Radius edge cases
-- [ ] Boundary tests
-- [ ] Performance benchmark
+- [x] Spatial query tests
+- [x] Radius edge cases
+- [x] Boundary tests
+- [x] Performance benchmark
 
 ## Phase 6 — Documentation
 
