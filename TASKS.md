@@ -39,7 +39,7 @@
 
 ## Phase 6 — Documentation
 
-- [ ] Architecture documentation
-- [ ] ADRs
-- [ ] API documentation
-- [ ] README
+- [x] Architecture documentation
+- [x] ADRs
+- [x] API documentation
+- [x] README
