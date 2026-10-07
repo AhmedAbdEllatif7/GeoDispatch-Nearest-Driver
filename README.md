@@ -7,6 +7,14 @@
 [![Tests](https://img.shields.io/badge/Tests-21%20Passed-44CC11?style=flat)](./tests)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+<p align="center">
+  <a href="./assets/GeoDispatch_routing_system_anima…_20261007155154.mp4">
+    <img src="./assets/PostGIS Neon City Dashboard.png" alt="GeoDispatch Preview — Click to watch demo" width="100%"/>
+  </a>
+  <br/>
+  <sub>▶️ Click the image to watch the demo video</sub>
+</p>
+
 GeoDispatch is a production-grade REST API backend built to demonstrate **high-performance geographic data handling, spatial query optimization, and real-time resource dispatching** at scale using **Laravel 11**, **PostgreSQL 17**, and **PostGIS 3.5**.
 
 ---
